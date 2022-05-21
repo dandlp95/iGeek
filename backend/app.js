@@ -6,7 +6,7 @@ PORT = process.env.PORT || 8080;
 require("dotenv").config();
 
 mongoose
-    .connect(process.env.MONGO_URI)
+    .connect(process.env.MONGO_URL)
     .then(() => {
 
         app

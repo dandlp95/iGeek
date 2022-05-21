@@ -22,15 +22,23 @@ const AccountSchema = new Schema({
     type: String,
     required: true,
   },
+  subscriptions: [
+    {
+      subscription: {
+        type: Schema.Types.ObjectId,
+        ref: "Subscription",
+      },
+    },
+  ],
   purchases: [
     {
       receipt: {
         type: Schema.Types.ObjectId,
-        ref: "Receipt"
-      }
-    }
-  ]
+        ref: "Receipt",
+      },
+    },
+  ],
 });
 
-const Account = mongoose.model('Account', AccountSchema);
+const Account = mongoose.model("Account", AccountSchema);
 module.exports = Account;
