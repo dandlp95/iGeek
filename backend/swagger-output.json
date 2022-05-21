@@ -1,0 +1,272 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My API",
+    "description": "Description",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Accounts",
+      "description": "All references needed to get, add, delete and edit accounts."
+    },
+    {
+      "name": "Products",
+      "description": "All references needed to get, add, delete and edit products."
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/products/": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Returns all Products",
+        "description": "Returns all products added to database.",
+        "operationId": "getAllProducts.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns all products.",
+            "schema": {
+              "$ref": "#/definitions/Products"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Adds 1 product.",
+        "description": "Adds the product in the request.",
+        "operationId": "addProduct",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns posted product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Returns 1 product by Id.",
+        "description": "Returns the product with the Id that matches the request   Id.",
+        "operationId": "getProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Product Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns product with specified request id",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/accounts/": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Returns all accounts",
+        "description": "Returns all accounts added to database.",
+        "operationId": "getAllAccounts.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns all accounts.",
+            "schema": {
+              "$ref": "#/definitions/Accounts"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Adds 1 account.",
+        "description": "Adds the account in the request.",
+        "operationId": "addAccount",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns posted product",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/accounts/{id}": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Returns 1 account by Id.",
+        "description": "Returns the account with the Id that matches the request   Id.",
+        "operationId": "getAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Product Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns account with specified request id",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Account": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "example": "TestUserName"
+        },
+        "password": {
+          "type": "string",
+          "example": "123456"
+        },
+        "firstName": {
+          "type": "string",
+          "example": "Joe"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Doe"
+        },
+        "address": {
+          "type": "string",
+          "example": "12 Test Street, ID, USA"
+        },
+        "email": {
+          "type": "string",
+          "example": "Joe_Doe@gmail.com"
+        },
+        "purchases": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        }
+      }
+    },
+    "Accounts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Account"
+      }
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "productName": {
+          "type": "string",
+          "example": "Test Product"
+        },
+        "productDescription": {
+          "type": "string",
+          "example": "This is a test description for test product"
+        },
+        "stock": {
+          "type": "number",
+          "example": 5
+        },
+        "cost": {
+          "type": "number",
+          "example": 100
+        }
+      }
+    },
+    "Products": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Product"
+      }
+    }
+  }
+}

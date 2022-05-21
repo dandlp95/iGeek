@@ -22,14 +22,10 @@ const AccountSchema = new Schema({
     type: String,
     required: true,
   },
-  subscriptions: [
-    {
-      subscription: {
-        type: Schema.Types.ObjectId,
-        ref: "Subscription",
-      },
-    },
-  ],
+  email:{
+    type: String,
+    required: true
+  },
   purchases: [
     {
       receipt: {
