@@ -1,35 +1,64 @@
 const ProductModel = require("../db/productModel");
 
 const getAllProducts = async (req, res) => {
-    const products  = await ProductModel.find({});
+  const products = await ProductModel.find({});
 
-    try{
-        res.status(200).send(products);
-    }catch(err){
-        res.status(500).send(err);
-    }
+  try {
+    res.status(200).send(products);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 };
 
 const getById = async (req, res) => {
-    const product = await ProductModel.findById(req.params.id);
+  const product = await ProductModel.findById(req.params.id);
 
-    try{
-        res.status(200).send(product);
-    }catch(err){
-        res.status(500).send(err);
-    }
-}
+  try {
+    res.status(200).send(product);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
 
 const addProduct = async (req, res) => {
-    const product = new ProductModel(req.body);
+  const product = new ProductModel(req.body);
 
-    try{
-        await product.save();
-        res.status(200).send(product);
-    }catch(err){
-        res.status(500).send(err);
+  try {
+    await product.save();
+    res.status(200).send(product);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
+const editProduct = async (req, res) => {
+  ProductModel.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.satus(200).send(docs);
     }
-}
+  });
+};
 
-module.exports = { getAllProducts, getById, addProduct };
+const deleteProduct = async (req, res) => {
+  ProductModel.findByIdAndDelete(req.params.id, (err, docs) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      if (docs === null) {
+        res.status(200).send("Alread deleted.");
+      } else {
+        res.status(200).send(docs);
+      }
+    }
+  });
+};
 
+module.exports = {
+  getAllProducts,
+  getById,
+  addProduct,
+  editProduct,
+  deleteProduct,
+};

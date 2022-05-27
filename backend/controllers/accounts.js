@@ -1,4 +1,6 @@
 const AccountModel = require("../db/accountModel");
+const Api404Error = require("../errorHandling/api404Error");
+const { validationResult } = require("express-validator");
 
 const getAllAccounts = async (req, res) => {
   const accounts = await AccountModel.find({});
@@ -10,25 +12,63 @@ const getAllAccounts = async (req, res) => {
   }
 };
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
+  // needs to validate req.params.id
   const account = await AccountModel.findById(req.params.id);
-
   try {
-    res.status(200).send(account);
+    if (account === null) {
+      throw new Api404Error(`User with id: ${req.params.id} not found.`);
+    }
   } catch (err) {
-    res.status(500).send(err);
+    next(err); // Sends error to error handler middleware
   }
 };
 
 const addAccount = async (req, res) => {
+  const errors = validationResult(req);
+
   const account = new AccountModel(req.body);
 
-  try {
-    await account.save();
-    res.status(200).send(account);
-  } catch (err) {
-    res.status(500).send(err);
+  if (!errors.isEmpty()) {
+    res.status(422).send(errors.array());
+  } else {
+    try {
+      await account.save();
+      res.status(200).send(account);
+    } catch (err) {
+      res.status(500).send(err);
+    }
   }
 };
 
-module.exports = { getAllAccounts, getById, addAccount };
+const editAccount = async (req, res) => {
+  AccountModel.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.satus(200).send(docs);
+    }
+  });
+};
+
+const deleteAccount = async (req, res) => {
+  AccountModel.findByIdAndDelete(req.params.id, (err, docs) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      if (docs === null) {
+        res.status(200).send("Alread deleted.");
+      } else {
+        res.status(200).send(docs);
+      }
+    }
+  });
+};
+
+module.exports = {
+  getAllAccounts,
+  getById,
+  addAccount,
+  editAccount,
+  deleteAccount,
+};

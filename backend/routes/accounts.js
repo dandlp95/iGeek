@@ -1,5 +1,6 @@
 const route = require("express").Router();
 const accounts = require("../controllers/accounts");
+const {check } = require("express-validator");
 
 route.get(
   "/",
@@ -43,5 +44,6 @@ route.post(
   }
   */
 );
+
 
 module.exports = route;

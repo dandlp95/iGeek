@@ -45,4 +45,14 @@ route.post(
   */
 );
 
+route.put(
+  "/:id",
+  products.editProduct
+)
+
+route.delete(
+  "/:id",
+  products.deleteProduct
+)
+
 module.exports = route;
