@@ -41,34 +41,6 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "post": {
-        "tags": [
-          "Product"
-        ],
-        "summary": "Adds 1 product.",
-        "description": "Adds the product in the request.",
-        "operationId": "addProduct",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns posted product",
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
       }
     },
     "/products/{id}": {
@@ -95,8 +67,89 @@
               "$ref": "#/definitions/Product"
             }
           },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/products/add_product": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Adds 1 product.",
+        "description": "Adds the product in the request.",
+        "operationId": "addProduct",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns posted product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/edit_product/{id}": {
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/products/delete_product/{id}": {
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -117,36 +170,8 @@
               "$ref": "#/definitions/Accounts"
             }
           },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Accounts"
-        ],
-        "summary": "Adds 1 account.",
-        "description": "Adds the account in the request.",
-        "operationId": "addAccount",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/Account"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns posted product",
-            "schema": {
-              "$ref": "#/definitions/Account"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -175,8 +200,92 @@
               "$ref": "#/definitions/Account"
             }
           },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/accounts/add_account": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Adds 1 account.",
+        "description": "Adds the account in the request.",
+        "operationId": "addAccount",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns posted product",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/accounts/edit_account/{id}": {
+      "put": {
+        "tags": [
+          "Accounts"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/accounts/delete_account/{id}": {
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
