@@ -32,6 +32,40 @@ exports.signupValidation = [
       });
     }),
 
+  body("password")
+    .isEmpty()
+    .withMessage("Please enter a valid password")
+
+    .isString()
+    .withMessage("Not a string."),
+
+  body("firstName")
+    .isEmpty()
+    .withMessage("Please enter a valid first name")
+
+    .isString()
+    .withMessage("Not a string.")
+
+    .isLength({ max: 50 })
+    .withMessage("Maximum number of characters exceeded."),
+
+  body("lastName")
+    .isEmpty()
+    .withMessage("Please enter a valid first name")
+
+    .isString()
+    .withMessage("Not a string.")
+
+    .isLength({ max: 50 })
+    .withMessage("Maximum number of characters exceeded."),
+
+  body("address")
+    .isEmpty()
+    .withMessage("Please enter a valid first name")
+
+    .isString()
+    .withMessage("Not a string."),
+
   // body('email', 'Please include a valid email').isEmail().normalizeEmail({ gmail_remove_dots: true }),
   // body('password', 'Password must be 6 or more characters').isLength({ min: 6 })
 ];
