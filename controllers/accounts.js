@@ -25,6 +25,7 @@ const getById = async (req, res, next) => {
     }
   } catch (err) {
     res.status(400).send(err); // Sends error to error handler middleware
+    
   }
 };
 

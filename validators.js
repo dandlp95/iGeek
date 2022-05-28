@@ -14,7 +14,6 @@ exports.accountValidation = [
     .withMessage("User name is not a string")
 
     .custom((value) => {
-      console.log(value);
       // users is an array.
       return AccountModel.find({ userName: value }).then((users) => {
         if (users.length > 0) {

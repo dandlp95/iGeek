@@ -111,18 +111,30 @@
         "tags": [
           "Product"
         ],
-        "description": "",
+        "summary": "Edits 1 product.",
+        "description": "Edits the product with the specified id.",
+        "operationId": "editProduct",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Returns edited product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -135,7 +147,9 @@
         "tags": [
           "Product"
         ],
-        "description": "",
+        "summary": "Deletes 1 product.",
+        "description": "Deletes the product with the specified id.",
+        "operationId": "deleteProduct",
         "parameters": [
           {
             "name": "id",
@@ -146,7 +160,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Returns deleted product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -225,7 +242,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns posted product",
+            "description": "Returns posted account",
             "schema": {
               "$ref": "#/definitions/Account"
             }
@@ -247,18 +264,30 @@
         "tags": [
           "Accounts"
         ],
-        "description": "",
+        "summary": "Edits account.",
+        "description": "Replaces account information with information from the request.",
+        "operationId": "editAccount",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Returns edit account",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -271,7 +300,9 @@
         "tags": [
           "Accounts"
         ],
-        "description": "",
+        "summary": "Deletes account.",
+        "description": "Deletes account with specified Id.",
+        "operationId": "deleteAccount",
         "parameters": [
           {
             "name": "id",
@@ -282,7 +313,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Returns deleted account",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
           },
           "400": {
             "description": "Bad Request"
@@ -336,11 +370,6 @@
         "email": {
           "type": "string",
           "example": "Joe_Doe@gmail.com"
-        },
-        "purchases": {
-          "type": "array",
-          "example": [],
-          "items": {}
         }
       }
     },

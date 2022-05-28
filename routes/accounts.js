@@ -40,14 +40,42 @@ route.post(
     schema: { $ref: '#/definitions/Account' }
   }] */
   /* #swagger.responses[200] = {
-    description: 'Returns posted product',
+    description: 'Returns posted account',
     schema: { $ref: '#/definitions/Account'}
   }
   */
 );
 
-route.put("/edit_account/:id", accountValidation, accounts.editAccount);
+route.put(
+  "/edit_account/:id",
+  accountValidation,
+  accounts.editAccount
+  /* #swagger.summary = 'Edits account.' */
+  /* #swagger.description = 'Replaces account information with information from the request.' */
+  /* #swagger.operationId = 'editAccount' */
+  /* #swagger.parameters = [{
+  name: 'body', 
+  in:'body',
+  schema: { $ref: '#/definitions/Account' }
+}] */
+  /* #swagger.responses[200] = {
+  description: 'Returns edit account',
+  schema: { $ref: '#/definitions/Account'}
+}
+*/
+);
 
-route.delete("/delete_account/:id", accounts.deleteAccount);
+route.delete(
+  "/delete_account/:id",
+  accounts.deleteAccount
+  /* #swagger.summary = 'Deletes account.' */
+  /* #swagger.description = 'Deletes account with specified Id.' */
+  /* #swagger.operationId = 'deleteAccount' */
+  /* #swagger.responses[200] = {
+description: 'Returns deleted account',
+schema: { $ref: '#/definitions/Account'}
+}
+*/
+);
 
 module.exports = route;

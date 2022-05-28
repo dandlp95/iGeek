@@ -46,8 +46,36 @@ route.post(
   */
 );
 
-route.put("/edit_product/:id", productValidation, products.editProduct);
+route.put(
+  "/edit_product/:id",
+  productValidation,
+  products.editProduct
+  /* #swagger.summary = 'Edits 1 product.' */
+  /* #swagger.description = 'Edits the product with the specified id.' */
+  /* #swagger.operationId = 'editProduct' */
+  /* #swagger.parameters = [{
+  name: 'body', 
+  in:'body',
+  schema: { $ref: '#/definitions/Product' }
+}] */
+  /* #swagger.responses[200] = {
+  description: 'Returns edited product',
+  schema: { $ref: '#/definitions/Product'}
+}
+*/
+);
 
-route.delete("/delete_product/:id", products.deleteProduct);
+route.delete(
+  "/delete_product/:id",
+  products.deleteProduct
+  /* #swagger.summary = 'Deletes 1 product.' */
+  /* #swagger.description = 'Deletes the product with the specified id.' */
+  /* #swagger.operationId = 'deleteProduct' */
+  /* #swagger.responses[200] = {
+description: 'Returns deleted product',
+schema: { $ref: '#/definitions/Product'}
+}
+*/
+);
 
 module.exports = route;
