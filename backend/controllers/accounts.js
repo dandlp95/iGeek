@@ -18,6 +18,8 @@ const getById = async (req, res, next) => {
   try {
     if (account === null) {
       throw new Api404Error(`User with id: ${req.params.id} not found.`);
+    } else{
+      res.status(200).send(account);
     }
   } catch (err) {
     next(err); // Sends error to error handler middleware
@@ -46,12 +48,12 @@ const editAccount = async (req, res) => {
     if (err) {
       res.status(400).send(err);
     } else {
-      res.satus(200).send(docs);
+      res.status(200).send(docs);
     }
   });
 };
 
-const deleteAccount = async (req, res) => {
+const deleteAccount = (req, res) => {
   AccountModel.findByIdAndDelete(req.params.id, (err, docs) => {
     if (err) {
       res.status(400).send(err);

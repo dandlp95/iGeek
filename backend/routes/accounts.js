@@ -1,6 +1,5 @@
 const route = require("express").Router();
 const accounts = require("../controllers/accounts");
-const {check } = require("express-validator");
 
 route.get(
   "/",
@@ -28,7 +27,7 @@ route.get(
 );
 
 route.post(
-  "/",
+  "/add_account",
   accounts.addAccount
   /* #swagger.summary = 'Adds 1 account.' */
   /* #swagger.description = 'Adds the account in the request.' */
@@ -44,6 +43,10 @@ route.post(
   }
   */
 );
+
+route.put("/edit_account/:id", accounts.editAccount);
+
+route.delete("/delete_account/:id", accounts.deleteAccount);
 
 
 module.exports = route;

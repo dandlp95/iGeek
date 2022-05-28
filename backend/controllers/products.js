@@ -20,28 +20,28 @@ const getById = async (req, res) => {
   }
 };
 
-const addProduct = async (req, res) => {
+const addProduct = (req, res) => {
   const product = new ProductModel(req.body);
 
   try {
-    await product.save();
+    product.save();
     res.status(200).send(product);
   } catch (err) {
     res.status(500).send(err);
   }
 };
 
-const editProduct = async (req, res) => {
+const editProduct = (req, res) => {
   ProductModel.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
     if (err) {
-      res.status(400).send(err);
+      res.status(400).send(err)
     } else {
-      res.satus(200).send(docs);
+      res.status(200).send(docs);
     }
   });
 };
 
-const deleteProduct = async (req, res) => {
+const deleteProduct = (req, res) => {
   ProductModel.findByIdAndDelete(req.params.id, (err, docs) => {
     if (err) {
       res.status(400).send(err);

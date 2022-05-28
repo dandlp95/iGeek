@@ -28,7 +28,7 @@ route.get(
 );
 
 route.post(
-  "/",
+  "/add_product",
   products.addProduct
   /* #swagger.summary = 'Adds 1 product.' */
   /* #swagger.description = 'Adds the product in the request.' */
@@ -46,12 +46,12 @@ route.post(
 );
 
 route.put(
-  "/:id",
+  "/edit_product/:id",
   products.editProduct
 )
 
 route.delete(
-  "/:id",
+  "/delete_product/:id",
   products.deleteProduct
 )
 
