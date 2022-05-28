@@ -1,31 +1,48 @@
 const ProductModel = require("../db/productModel");
+const { validationResult } = require("express-validator");
+const Api404Error = require("../errorHandling/api404Error");
 
 const getAllProducts = async (req, res) => {
-  const products = await ProductModel.find({});
-
   try {
-    res.status(200).send(products);
+    const products = await ProductModel.find({});
+    if (products === null) {
+      throw new Api404Error("No products found.");
+    } else {
+      res.status(200).send(products);
+    }
   } catch (err) {
     res.status(500).send(err);
   }
 };
 
 const getById = async (req, res) => {
-  const product = await ProductModel.findById(req.params.id);
-
   try {
-    res.status(200).send(product);
+    const product = await ProductModel.findById(req.params.id);
+    if (product === null) {
+      throw new Api404Error(`User with id: ${req.params.id} not found.`);
+    } else {
+      res.status(200).send(product);
+    }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(400).send(err); // Sends error to error handler middleware
   }
 };
 
-const addProduct = (req, res) => {
+const addProduct = async (req, res) => {
   const product = new ProductModel(req.body);
+  const errors = validationResult(req);
 
   try {
-    product.save();
-    res.status(200).send(product);
+    if (!errors.isEmpty()) {
+      res.status(422).send(errors.array());
+    } else {
+      try {
+        await product.save();
+        res.status(200).send(product);
+      } catch (err) {
+        res.status(500).send(err);
+      }
+    }
   } catch (err) {
     res.status(500).send(err);
   }
@@ -34,7 +51,7 @@ const addProduct = (req, res) => {
 const editProduct = (req, res) => {
   ProductModel.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
     if (err) {
-      res.status(400).send(err)
+      res.status(400).send(err);
     } else {
       res.status(200).send(docs);
     }

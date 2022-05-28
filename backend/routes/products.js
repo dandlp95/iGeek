@@ -1,6 +1,6 @@
 const route = require("express").Router();
 const products = require("../controllers/products");
-
+const { productValidation } = require("../validators");
 route.get(
   "/",
   products.getAllProducts
@@ -29,6 +29,7 @@ route.get(
 
 route.post(
   "/add_product",
+  productValidation,
   products.addProduct
   /* #swagger.summary = 'Adds 1 product.' */
   /* #swagger.description = 'Adds the product in the request.' */
@@ -45,14 +46,8 @@ route.post(
   */
 );
 
-route.put(
-  "/edit_product/:id",
-  products.editProduct
-)
+route.put("/edit_product/:id", productValidation, products.editProduct);
 
-route.delete(
-  "/delete_product/:id",
-  products.deleteProduct
-)
+route.delete("/delete_product/:id", products.deleteProduct);
 
 module.exports = route;

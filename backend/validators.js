@@ -1,7 +1,8 @@
 const { body } = require("express-validator");
 const AccountModel = require("./db/accountModel");
+const ProductModel = require("./db/productModel");
 
-exports.signupValidation = [
+exports.accountValidation = [
   body("userName")
     .notEmpty()
     .withMessage("Please enter a user name")
@@ -17,7 +18,6 @@ exports.signupValidation = [
       // users is an array.
       return AccountModel.find({ userName: value }).then((users) => {
         if (users.length > 0) {
-          console.log(user);
           return Promise.reject("User name is already in use.");
         }
       });
@@ -70,7 +70,48 @@ exports.signupValidation = [
     .withMessage("Not a string."),
 
   body("purchases").not().exists().withMessage("Field not needed."),
+];
 
-  // body('email', 'Please include a valid email').isEmail().normalizeEmail({ gmail_remove_dots: true }),
-  // body('password', 'Password must be 6 or more characters').isLength({ min: 6 })
+exports.productValidation = [
+  body("productName")
+    .notEmpty()
+    .withMessage("Please add product name.")
+
+    .isString()
+    .withMessage("Not a string")
+
+    .isLength({ max: 40 })
+    .withMessage("Maximum number of characters exceeded")
+
+    .custom((value) => {
+      return ProductModel.find({ productName: value }).then((products) => {
+        if (products.length > 0) {
+          return Promise.reject("Product is already in the database");
+        }
+      });
+    }),
+
+  body("productDescription")
+    .notEmpty()
+    .withMessage("Please add product description")
+
+    .isString()
+    .withMessage("Not a string")
+
+    .isLength({ max: 500 })
+    .withMessage("Maximum number of characters exceeded"),
+
+  body("stock")
+    .notEmpty()
+    .withMessage("Please add stock")
+
+    .isNumeric() // String or integer are valid. Schema will transform it into an integer.
+    .withMessage("Not a number"),
+
+  body("cost")
+    .notEmpty()
+    .withMessage("Please add product cost")
+
+    .isFloat()
+    .withMessage("Not a float."),
 ];

@@ -1,6 +1,6 @@
 const route = require("express").Router();
 const accounts = require("../controllers/accounts");
-const { signupValidation } = require("../validators");
+const { accountValidation } = require("../validators");
 
 route.get(
   "/",
@@ -29,7 +29,7 @@ route.get(
 
 route.post(
   "/add_account",
-  signupValidation,
+  accountValidation,
   accounts.addAccount
   /* #swagger.summary = 'Adds 1 account.' */
   /* #swagger.description = 'Adds the account in the request.' */
@@ -46,7 +46,7 @@ route.post(
   */
 );
 
-route.put("/edit_account/:id", accounts.editAccount);
+route.put("/edit_account/:id", accountValidation, accounts.editAccount);
 
 route.delete("/delete_account/:id", accounts.deleteAccount);
 

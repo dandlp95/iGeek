@@ -3,33 +3,35 @@ const Api404Error = require("../errorHandling/api404Error");
 const { validationResult } = require("express-validator");
 
 const getAllAccounts = async (req, res) => {
-  const accounts = await AccountModel.find({});
-
   try {
-    res.status(200).send(accounts);
+    const accounts = await AccountModel.find({});
+    if (accounts === null) {
+      throw new Api404Error("No accounts found.");
+    } else {
+      res.status(200).send(accounts);
+    }
   } catch (err) {
-    res.status(500).send(err);
+    res.status(400).send(err);
   }
 };
 
 const getById = async (req, res, next) => {
-  // needs to validate req.params.id
-  const account = await AccountModel.findById(req.params.id);
   try {
+    const account = await AccountModel.findById(req.params.id);
     if (account === null) {
       throw new Api404Error(`User with id: ${req.params.id} not found.`);
     } else {
       res.status(200).send(account);
     }
   } catch (err) {
-    next(err); // Sends error to error handler middleware
+    res.status(400).send(err); // Sends error to error handler middleware
   }
 };
 
 const addAccount = async (req, res) => {
   const errors = validationResult(req);
 
-  const account = new AccountModel(req.body);
+  const account = new AccountModel(req.body); // Does this go inside try block tho?
   try {
     if (!errors.isEmpty()) {
       res.status(422).send(errors.array());
@@ -62,7 +64,7 @@ const deleteAccount = (req, res) => {
       res.status(400).send(err);
     } else {
       if (docs === null) {
-        res.status(200).send("Alread deleted.");
+        res.status(400).send("No account found.");
       } else {
         res.status(200).send(docs);
       }
