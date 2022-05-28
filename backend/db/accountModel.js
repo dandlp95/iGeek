@@ -5,6 +5,8 @@ const AccountSchema = new Schema({
   userName: {
     type: String,
     required: true,
+    unique: true,
+    dropDuplicates: true
   },
   password: {
     type: String,
@@ -24,16 +26,14 @@ const AccountSchema = new Schema({
   },
   email:{
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    dropDuplicates: true
   },
-  purchases: [
-    {
-      receipt: {
-        type: Schema.Types.ObjectId,
-        ref: "Receipt",
-      },
-    },
-  ],
+  purchases:{
+    type:[],
+    required: true
+  }
 });
 
 const Account = mongoose.model("Account", AccountSchema);

@@ -18,7 +18,7 @@ const getById = async (req, res, next) => {
   try {
     if (account === null) {
       throw new Api404Error(`User with id: ${req.params.id} not found.`);
-    } else{
+    } else {
       res.status(200).send(account);
     }
   } catch (err) {
@@ -30,16 +30,19 @@ const addAccount = async (req, res) => {
   const errors = validationResult(req);
 
   const account = new AccountModel(req.body);
-
-  if (!errors.isEmpty()) {
-    res.status(422).send(errors.array());
-  } else {
-    try {
-      await account.save();
-      res.status(200).send(account);
-    } catch (err) {
-      res.status(500).send(err);
+  try {
+    if (!errors.isEmpty()) {
+      res.status(422).send(errors.array());
+    } else {
+      try {
+        await account.save();
+        res.status(200).send(account);
+      } catch (err) {
+        res.status(500).send(err);
+      }
     }
+  } catch (err) {
+    res.status(400).send(err);
   }
 };
 
