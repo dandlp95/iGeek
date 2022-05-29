@@ -5,8 +5,8 @@ const doc = {
     title: "My API",
     description: "Description",
   },
-  host: "localhost:8080",
-  schemes: ["http"],
+  host: "igeekb.herokuapp",
+  schemes: ["https"],
   tags: [
     {
       name: "Accounts",
@@ -27,6 +27,7 @@ const doc = {
       lastName: "Doe",
       address: "12 Test Street, ID, USA",
       email: "Joe_Doe@gmail.com",
+      interests: []
     },
     Accounts: [{ $ref: "#/definitions/Account" }],
     Product: {

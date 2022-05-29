@@ -3,7 +3,7 @@ const route = require("express").Router();
 route.use(
   "/products",
   require("./products")
-  // #swagger.tags = ['Product']
+  // #swagger.tags = ['Products']
 );
 
 route.use(

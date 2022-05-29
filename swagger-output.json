@@ -5,7 +5,7 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "igeekb.herokuapp",
   "basePath": "/",
   "tags": [
     {
@@ -18,13 +18,13 @@
     }
   ],
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/products/": {
       "get": {
         "tags": [
-          "Product"
+          "Products"
         ],
         "summary": "Returns all Products",
         "description": "Returns all products added to database.",
@@ -46,7 +46,7 @@
     "/products/{id}": {
       "get": {
         "tags": [
-          "Product"
+          "Products"
         ],
         "summary": "Returns 1 product by Id.",
         "description": "Returns the product with the Id that matches the request   Id.",
@@ -76,7 +76,7 @@
     "/products/add_product": {
       "post": {
         "tags": [
-          "Product"
+          "Products"
         ],
         "summary": "Adds 1 product.",
         "description": "Adds the product in the request.",
@@ -109,7 +109,7 @@
     "/products/edit_product/{id}": {
       "put": {
         "tags": [
-          "Product"
+          "Products"
         ],
         "summary": "Edits 1 product.",
         "description": "Edits the product with the specified id.",
@@ -145,7 +145,7 @@
     "/products/delete_product/{id}": {
       "delete": {
         "tags": [
-          "Product"
+          "Products"
         ],
         "summary": "Deletes 1 product.",
         "description": "Deletes the product with the specified id.",
@@ -370,6 +370,11 @@
         "email": {
           "type": "string",
           "example": "Joe_Doe@gmail.com"
+        },
+        "interests": {
+          "type": "array",
+          "example": [],
+          "items": {}
         }
       }
     },
