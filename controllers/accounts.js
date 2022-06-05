@@ -1,8 +1,10 @@
 const AccountModel = require("../db/accountModel");
 const Api404Error = require("../errorHandling/api404Error");
+const Api401Error = require("../errorHandling/api401Error");
 const { validationResult } = require("express-validator");
-const Account = require("../db/accountModel");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const getAllAccounts = async (req, res) => {
   try {
@@ -75,20 +77,36 @@ const deleteAccount = (req, res) => {
 };
 
 const login = (req, res, next) => {
-  const email = req.body.email;
-  const assignment = req.body.password;
-
-  Account.findOne({ email: email })
-    .then(account =>{
-      if(!account) {
+  const userName = req.body.userName;
+  const password = req.body.password;
+  let accountInfo;
+  AccountModel.findOne({ userName: userName })
+    .then((account) => {
+      if (!account) {
         throw new Api404Error(`Account not found`);
       }
-      bcrypt.compare();
-
+      console.log(account);
+      accountInfo = account;
+      return bcrypt.compare(password, account.password);
+    })
+    .then((matches) => {
+      if (!matches) {
+        throw new Api401Error(`Wrong passwords`);
+      }
+      const token = jwt.sign(
+        {
+          email: accountInfo.email,
+          id: accountInfo._id.toString(),
+        },
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: "1h" }
+      );
+      res.status(200).send({ token: token, userId: accountInfo._id.toString() });
     })
     .catch((err) => {
+      console.log(err);
       if (!err.statusCode) {
-        err.StatusCode = 500;
+        err.statusCode = 500;
       }
       next(err);
     });
