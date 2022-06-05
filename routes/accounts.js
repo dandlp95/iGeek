@@ -78,4 +78,7 @@ schema: { $ref: '#/definitions/Account'}
 */
 );
 
+
+route.post("/login", accounts.login);
+
 module.exports = route;

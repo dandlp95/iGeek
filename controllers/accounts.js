@@ -73,10 +73,19 @@ const deleteAccount = (req, res) => {
   });
 };
 
+const login = (req, res, next) => {
+  const email = req.body.email;
+  const assignment = req.body.password;
+
+  
+
+}
+
 module.exports = {
   getAllAccounts,
   getById,
   addAccount,
   editAccount,
   deleteAccount,
+  login
 };
