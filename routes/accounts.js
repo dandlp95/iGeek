@@ -1,6 +1,7 @@
 const route = require("express").Router();
 const accounts = require("../controllers/accounts");
 const { accountValidation } = require("../validators");
+const isAuth = require("../middleware/isAuth");
 
 route.get(
   "/",
@@ -77,7 +78,6 @@ schema: { $ref: '#/definitions/Account'}
 }
 */
 );
-
 
 route.post("/login", accounts.login);
 

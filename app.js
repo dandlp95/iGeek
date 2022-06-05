@@ -10,6 +10,7 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
   app
     .use(cors())
     .use(express.json())
+    //.use("Access-Control-Allow-Headers", "Content-Type, Authorization")
     .use(("/", require("./routes")))
     .use(logError)
     .use(returnError);
