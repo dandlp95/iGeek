@@ -1,6 +1,8 @@
 const AccountModel = require("../db/accountModel");
 const Api404Error = require("../errorHandling/api404Error");
 const { validationResult } = require("express-validator");
+const Account = require("../db/accountModel");
+const bcrypt = require('bcrypt');
 
 const getAllAccounts = async (req, res) => {
   try {
@@ -25,7 +27,6 @@ const getById = async (req, res, next) => {
     }
   } catch (err) {
     res.status(400).send(err); // Sends error to error handler middleware
-    
   }
 };
 
@@ -77,9 +78,21 @@ const login = (req, res, next) => {
   const email = req.body.email;
   const assignment = req.body.password;
 
-  
+  Account.findOne({ email: email })
+    .then(account =>{
+      if(!account) {
+        throw new Api404Error(`Account not found`);
+      }
+      bcrypt.compare();
 
-}
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.StatusCode = 500;
+      }
+      next(err);
+    });
+};
 
 module.exports = {
   getAllAccounts,
@@ -87,5 +100,5 @@ module.exports = {
   addAccount,
   editAccount,
   deleteAccount,
-  login
+  login,
 };

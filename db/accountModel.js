@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcrypt");
 
 const AccountSchema = new Schema({
   userName: {
     type: String,
     required: true,
     unique: true,
-    dropDuplicates: true
+    dropDuplicates: true,
   },
   password: {
     type: String,
@@ -24,15 +25,26 @@ const AccountSchema = new Schema({
     type: String,
     required: true,
   },
-  email:{
+  email: {
     type: String,
     required: true,
     unique: true,
-    dropDuplicates: true
+    dropDuplicates: true,
   },
-  purchases:{
-    type:[],
-    required: true
+  purchases: {
+    type: [],
+    required: true,
+  },
+});
+
+AccountSchema.pre("save", async function (next) {
+  try{
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(this.password);
+    this.password = hashedPassword;
+    next();
+  }catch(err){
+    next(err);
   }
 });
 
