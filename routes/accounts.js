@@ -50,6 +50,7 @@ route.post(
 route.put(
   "/edit_account/:id",
   accountValidation,
+  isAuth.requireToken,
   accounts.editAccount
   /* #swagger.summary = 'Edits account.' */
   /* #swagger.description = 'Replaces account information with information from the request.' */

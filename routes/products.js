@@ -1,6 +1,7 @@
 const route = require("express").Router();
 const products = require("../controllers/products");
 const { productValidation } = require("../validators");
+
 route.get(
   "/",
   products.getAllProducts
