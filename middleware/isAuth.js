@@ -5,11 +5,10 @@ const requireToken = (req, res, next) => {
   if (!req.get("Authorization")) {
     throw api401Error("Not authenticated.");
   }
-  const token = req.get("Authorization").split(" ")[0];
+  const token = req.get("Authorization").split(" ")[1];
   let decodedToken;
-
   try {
-    decodedToken = jwt.verify(process.env.JWT_SECRET_KEY);
+    decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
   } catch (err) {
     err.status = 500;
     throw err;

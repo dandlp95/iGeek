@@ -85,8 +85,9 @@ const login = (req, res, next) => {
       if (!account) {
         throw new Api404Error(`Account not found`);
       }
-      console.log(account);
       accountInfo = account;
+      console.log(password);
+      console.log(account.password);
       return bcrypt.compare(password, account.password);
     })
     .then((matches) => {
@@ -101,7 +102,9 @@ const login = (req, res, next) => {
         process.env.JWT_SECRET_KEY,
         { expiresIn: "1h" }
       );
-      res.status(200).send({ token: token, userId: accountInfo._id.toString() });
+      res
+        .status(200)
+        .send({ token: token, userId: accountInfo._id.toString() });
     })
     .catch((err) => {
       console.log(err);
