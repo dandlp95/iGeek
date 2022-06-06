@@ -16,6 +16,7 @@ route.get(
 );
 route.get(
   "/:id",
+  isAuth.requireToken,
   accounts.getById
   /* #swagger.summary = 'Returns 1 account by Id.' */
   /* #swagger.description = 'Returns the account with the Id that matches the request
@@ -69,6 +70,7 @@ route.put(
 
 route.delete(
   "/delete_account/:id",
+  isAuth.requireToken,
   accounts.deleteAccount
   /* #swagger.summary = 'Deletes account.' */
   /* #swagger.description = 'Deletes account with specified Id.' */
