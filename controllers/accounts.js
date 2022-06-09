@@ -86,8 +86,6 @@ const login = (req, res, next) => {
         throw new Api404Error(`Account not found`);
       }
       accountInfo = account;
-      console.log(password);
-      console.log(account.password);
       return bcrypt.compare(password, account.password);
     })
     .then((matches) => {
@@ -115,6 +113,10 @@ const login = (req, res, next) => {
     });
 };
 
+const purchase = (req, res) => {
+  
+};
+
 module.exports = {
   getAllAccounts,
   getById,
@@ -122,4 +124,5 @@ module.exports = {
   editAccount,
   deleteAccount,
   login,
+  purchase,
 };

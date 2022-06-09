@@ -2,20 +2,31 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ReceiptSchema = new Schema({
-    products:[
-        {
-            productName:{
-                type: String,
-                required: true,
-                cost: Number
-            }
-        }
-    ],
-    totalCost:{
+  purchase: [
+    {
+      productId: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+      productName: {
+        type: String,
+        required: true,
+      },
+      cost: {
         type: Number,
-        required: true
-    }
-})
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+      AccountId: {
+        type: Schema.Types.ObjectId,
+        ref: "Account",
+      },
+    },
+  ],
+});
 
 const Receipt = mongoose.model("Receipt", ReceiptSchema);
 

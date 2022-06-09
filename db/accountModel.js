@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 
 const AccountSchema = new Schema({
+  googleId: {
+    type: String,
+  },
   userName: {
     type: String,
     required: true,
@@ -11,7 +14,7 @@ const AccountSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
   firstName: {
     type: String,
@@ -23,7 +26,7 @@ const AccountSchema = new Schema({
   },
   address: {
     type: String,
-    required: true,
+    // required: true,
   },
   email: {
     type: String,
@@ -38,13 +41,15 @@ const AccountSchema = new Schema({
 });
 
 AccountSchema.pre("save", async function (next) {
-  try{
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(this.password, salt);
-    this.password = hashedPassword;
-    next();
-  }catch(err){
-    next(err);
+  if (this.password) {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(this.password, salt);
+      this.password = hashedPassword;
+      next();
+    } catch (err) {
+      next(err);
+    }
   }
 });
 

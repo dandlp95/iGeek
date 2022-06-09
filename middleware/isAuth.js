@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken");
 const api401Error = require("../errorHandling/api401Error");
+const { ensureAuth } = "./OAuth";
 
 const requireToken = (req, res, next) => {
   if (!req.get("Authorization")) {
-    throw api401Error("Not authenticated.");
+    // throw api401Error("Not authenticated.");
+    ensureAuth(req, res, next); // Not sure about this one.
   }
   const token = req.get("Authorization").split(" ")[1];
   let decodedToken;
