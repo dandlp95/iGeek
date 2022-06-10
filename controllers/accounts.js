@@ -1,12 +1,14 @@
 const AccountModel = require("../db/accountModel");
 const Api404Error = require("../errorHandling/api404Error");
 const Api401Error = require("../errorHandling/api401Error");
+const ReceiptModel = require("../db/receiptModel");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const getAllAccounts = async (req, res) => {
+  
   try {
     const accounts = await AccountModel.find({});
     if (accounts === null) {
@@ -57,12 +59,13 @@ const editAccount = async (req, res) => {
     if (err) {
       res.status(400).send(err);
     } else {
+      console.log(docs);
       res.status(200).send(docs);
     }
   });
 };
 
-const deleteAccount = (req, res) => {
+const deleteAccount = async (req, res) => {
   AccountModel.findByIdAndDelete(req.params.id, (err, docs) => {
     if (err) {
       res.status(400).send(err);
@@ -113,8 +116,28 @@ const login = (req, res, next) => {
     });
 };
 
-const purchase = (req, res) => {
-  
+const purchase = async (req, res) => {
+  try {
+    console.log(req.accountId);
+    if (req.accountId) {
+      const receiptData = {
+        accountId: req.accountId,
+        purchase: req.body,
+      };
+      const receipt = new ReceiptModel(receiptData);
+      const receiptId = receipt._id;
+      await receipt.save();
+
+      const account = await AccountModel.findById(req.accountId);
+      account.purchases.push(receiptId);
+      await account.save();
+      res.status(200).send("Success");
+    } else {
+      res.status(500).send("Fail.");
+    }
+  } catch (err) {
+    res.status(500).send("Error: " + err.message);
+  }
 };
 
 module.exports = {

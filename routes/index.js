@@ -12,9 +12,9 @@ route.use(
   // #swagger.tags = ['Accounts']
 );
 
-route.use("/views", require("./views"));
-
 route.use("/auth", require("./auth"));
+
+route.use("/views", require("./views"));
 
 route.use("/", require("./documentation"));
 

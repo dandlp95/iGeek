@@ -34,10 +34,14 @@ const AccountSchema = new Schema({
     unique: true,
     dropDuplicates: true,
   },
-  purchases: {
-    type: [],
-    required: true,
-  },
+  purchases: [
+    {
+      receipt: {
+        type: Schema.Types.ObjectId,
+        ref: "Receipt",
+      },
+    },
+  ],
 });
 
 AccountSchema.pre("save", async function (next) {

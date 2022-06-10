@@ -1,6 +1,7 @@
 const route = require("express").Router();
 const accounts = require("../controllers/accounts");
 const isAuth = require("../middleware/isAuth");
+const { accountValidation } = require("../validators");
 
 route.get(
   "/",
@@ -81,9 +82,8 @@ schema: { $ref: '#/definitions/Account'}
 */
 );
 
-route.post("/purchase", accounts.purchase);
+route.post("/purchase", isAuth.requireToken, accounts.purchase);
 
 route.post("/login", accounts.login);
 
 module.exports = route;
-

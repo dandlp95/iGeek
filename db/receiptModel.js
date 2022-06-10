@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ReceiptSchema = new Schema({
+  accountId: {
+    type: Schema.Types.ObjectId,
+    ref: "Account",
+  },
   purchase: [
     {
       productId: {
@@ -19,10 +23,6 @@ const ReceiptSchema = new Schema({
       quantity: {
         type: Number,
         required: true,
-      },
-      AccountId: {
-        type: Schema.Types.ObjectId,
-        ref: "Account",
       },
     },
   ],
