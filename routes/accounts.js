@@ -1,10 +1,11 @@
 const route = require("express").Router();
 const accounts = require("../controllers/accounts");
-const { accountValidation } = require("../validators");
 const isAuth = require("../middleware/isAuth");
+const { accountValidation } = require("../validators");
 
 route.get(
   "/",
+  isAuth.requireToken,
   accounts.getAllAccounts
   /* #swagger.summary = 'Returns all accounts' */
   /* #swagger.description = 'Returns all accounts added to database.' */
@@ -82,7 +83,8 @@ schema: { $ref: '#/definitions/Account'}
 */
 );
 
+route.post("/purchase", isAuth.requireToken, accounts.purchase);
+
 route.post("/login", accounts.login);
 
 module.exports = route;
-
