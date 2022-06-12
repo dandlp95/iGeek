@@ -106,9 +106,8 @@ const editAccount = async (req, res) => {
         }
       );
     } catch (err) {
-      res.status(500).send(err);
+      next(err); // next(err) or res.send(err)??
     }
-    
   } else {
     const err = new Api401Error("Not authorized to update account.");
     next(err);
@@ -116,17 +115,26 @@ const editAccount = async (req, res) => {
 };
 
 const deleteAccount = async (req, res) => {
-  AccountModel.findByIdAndDelete(req.params.id, (err, docs) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      if (docs === null) {
-        res.status(400).send("No account found.");
-      } else {
-        res.status(200).send(docs);
-      }
+  if (req.params.id === req.accountId) {
+    try {
+      AccountModel.findByIdAndDelete(req.params.id, (err, docs) => {
+        if (err) {
+          res.status(400).send(err);
+        } else {
+          if (docs === null) {
+            res.status(400).send("No account found.");
+          } else {
+            res.status(200).send(docs);
+          }
+        }
+      });
+    } catch (err) {
+      res.status(500).send(err); // next(err) or res.send(err)??
     }
-  });
+  } else {
+    const err = new Api401Error("Not authorized to delete.");
+    next(err);
+  }
 };
 
 const login = (req, res, next) => {

@@ -51,7 +51,7 @@ route.post(
 
 route.patch(
   "/edit_account/:id",
-  // accountValidation,
+  //accountValidation, <- Need to fix validation for editing account
   isAuth.requireToken,
   accounts.editAccount
   /* #swagger.summary = 'Edits account.' */
