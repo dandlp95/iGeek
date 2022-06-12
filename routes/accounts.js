@@ -5,6 +5,7 @@ const { accountValidation } = require("../validators");
 
 route.get(
   "/",
+  isAuth.requireToken,
   accounts.getAllAccounts
   /* #swagger.summary = 'Returns all accounts' */
   /* #swagger.description = 'Returns all accounts added to database.' */

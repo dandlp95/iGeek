@@ -34,6 +34,11 @@ const AccountSchema = new Schema({
     unique: true,
     dropDuplicates: true,
   },
+  role: {
+    type: String,
+    default: "customer",
+    required: true,
+  },
   purchases: [
     {
       receipt: {

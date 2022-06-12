@@ -4,7 +4,7 @@ const { ensureAuth } = "./OAuth";
 
 const requireToken = (req, res, next) => {
   if (!req.get("Authorization")) {
-    throw api401Error("Not authenticated.");
+    throw new api401Error("Not authenticated.");
     // ensureAuth(req, res, next); // Not sure about this one being here.
   }
   const token = req.get("Authorization").split(" ")[1];
@@ -19,8 +19,7 @@ const requireToken = (req, res, next) => {
     throw new api401Error("Not authenticated.");
   }
   req.accountId = decodedToken.id;
-  // console.log(decodedToken);
-  // console.log(decodedToken.id);
+
   next();
 };
 
