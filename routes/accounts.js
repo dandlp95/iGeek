@@ -49,9 +49,9 @@ route.post(
   */
 );
 
-route.put(
+route.patch(
   "/edit_account/:id",
-  accountValidation,
+  // accountValidation,
   isAuth.requireToken,
   accounts.editAccount
   /* #swagger.summary = 'Edits account.' */

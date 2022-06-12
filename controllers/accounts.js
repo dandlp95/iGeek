@@ -51,7 +51,7 @@ const getById = async (req, res, next) => {
       res.status(400).send(err); // Sends error to error handler middleware
     }
   } else {
-    const err =  new Api401Error("Not allowed."); // Need to test this.
+    const err = new Api401Error("Not allowed."); // Need to test this.
     next(err);
   }
 };
@@ -78,14 +78,41 @@ const addAccount = async (req, res) => {
 };
 
 const editAccount = async (req, res) => {
-  AccountModel.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      console.log(docs);
-      res.status(200).send(docs);
+  if (req.accountId === req.params.id) {
+    const accountEdits = {
+      userName: req.body.userName,
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      address: req.body.address,
+    };
+
+    for (field in accountEdits) {
+      if (field === null) {
+        delete field;
+      }
     }
-  });
+
+    try {
+      AccountModel.findByIdAndUpdate(
+        req.params.id,
+        accountEdits,
+        (err, docs) => {
+          if (err) {
+            res.status(400).send(err);
+          } else {
+            res.status(200).send(docs);
+          }
+        }
+      );
+    } catch (err) {
+      res.status(500).send(err);
+    }
+    
+  } else {
+    const err = new Api401Error("Not authorized to update account.");
+    next(err);
+  }
 };
 
 const deleteAccount = async (req, res) => {
