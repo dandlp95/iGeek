@@ -27,13 +27,11 @@ module.exports = function (passport) {
             done(null, account);
           } else {
             const account = await AccountModel.create(newAccount);
-            //const account = new AccountModel(newAccount);
-            // await account.save();
-            //console.log(account);
             done(null, account);
           }
         } catch (err) {
-          console.error(err);
+          // console.error(err);
+          next(err);
         }
       }
     )

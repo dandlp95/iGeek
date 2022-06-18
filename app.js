@@ -5,7 +5,7 @@ const cors = require("cors");
 PORT = process.env.PORT || 8080;
 require("dotenv").config();
 const { logError, returnError } = require("./errorHandling/errorHandler");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 const exphbs = require("express-handlebars");
 const passport = require("passport");
 const session = require("express-session");
@@ -35,13 +35,13 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
       next();
     })
     .use(("/", require("./routes")))
-    .use(logError)
+    //.use(logError)
     .use(returnError);
 
   // Login
-  if (process.env.NODE_ENV === "development") {
-    app.use(morgan("dev"));
-  }
+  // if (process.env.NODE_ENV === "development") {
+  //   app.use(morgan("dev"));
+  // }
 
   // handlebars
   // its exphbs.engine, not exphbs

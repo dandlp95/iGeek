@@ -1,5 +1,6 @@
 const route = require("express").Router();
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
 // Auth with Google
 // Get /auth/google
@@ -14,8 +15,17 @@ route.get(
   "/google/callback",
   passport.authenticate("google", { failureMessage: "failed to log in." }),
   (req, res) => {
-    console.log(req);
-    res.send("success");
+    const token = jwt.sign(
+      {
+        email: req.user.email,
+        id: req.user._id,
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    console.log(req.user);
+    res.send(token);
   }
 );
 
