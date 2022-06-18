@@ -1,7 +1,7 @@
 const route = require("express").Router();
 const accounts = require("../controllers/accounts");
 const isAuth = require("../middleware/isAuth");
-const { accountValidation } = require("../validators");
+const { accountValidation, editAccountValidation } = require("../middleware/validators");
 
 route.get(
   "/",
@@ -51,7 +51,7 @@ route.post(
 
 route.patch(
   "/edit_account/:id",
-  //accountValidation, <- Need to fix validation for editing account
+  editAccountValidation, // <- Need to fix validation for editing account
   isAuth.requireToken,
   accounts.editAccount
   /* #swagger.summary = 'Edits account.' */

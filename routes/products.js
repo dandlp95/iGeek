@@ -1,6 +1,6 @@
 const route = require("express").Router();
 const products = require("../controllers/products");
-const { productValidation } = require("../validators");
+const { productValidation } = require("../middleware/validators");
 
 route.get(
   "/",
