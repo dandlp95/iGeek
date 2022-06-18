@@ -6,6 +6,7 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { encryptPassword } = require("../middleware/utilities");
 
 const getAllAccounts = async (req, res) => {
   const accountId = req.accountId;
@@ -77,8 +78,12 @@ const addAccount = async (req, res) => {
   }
 };
 
-const editAccount = async (req, res) => {
+const editAccount = async (req, res, next) => {
   if (req.accountId === req.params.id) {
+    if (req.body.password) {
+      req.body.password = await encryptPassword(req.body.password);
+    }
+
     const accountEdits = {
       userName: req.body.userName,
       password: req.body.password,
@@ -87,12 +92,13 @@ const editAccount = async (req, res) => {
       address: req.body.address,
     };
 
+    console.log(accountEdits);
+
     for (field in accountEdits) {
       if (field === null) {
         delete field;
       }
     }
-
     try {
       AccountModel.findByIdAndUpdate(
         req.params.id,
