@@ -1,7 +1,10 @@
 const route = require("express").Router();
 const accounts = require("../controllers/accounts");
 const isAuth = require("../middleware/isAuth");
-const { accountValidation, editAccountValidation } = require("../middleware/validators");
+const {
+  accountValidation,
+  editAccountValidation,
+} = require("../middleware/validators");
 
 route.get(
   "/",
@@ -28,7 +31,7 @@ route.get(
     description: 'Returns account with specified request id',
     schema: { $ref: '#/definitions/Account'}
   } */
-
+  /* #swagger.security = [{Bearer:[]}]*/
 );
 
 route.post(
@@ -48,6 +51,7 @@ route.post(
     schema: { $ref: '#/definitions/Account'}
   }
   */
+  /* #swagger.security = [{Bearer:[]}]*/
 );
 
 route.patch(
@@ -68,6 +72,7 @@ route.patch(
   schema: { $ref: '#/definitions/Account'}
 }
 */
+ /* #swagger.security = [{Bearer:[]}]*/
 );
 
 route.delete(
@@ -82,34 +87,40 @@ description: 'Returns deleted account',
 schema: { $ref: '#/definitions/Account'}
 }
 */
+  /* #swagger.security = [{Bearer:[]}]*/
 );
 
-route.post("/purchase", isAuth.requireToken, accounts.purchase
-/*#swagger.summary = 'Purchases 1 product'*/
-/*#swagger.desription = "Generates receipt and adds it to database" */
-/*#swagger.operationId = "purchase"*/
-/*#swagger.parameters = [{
+route.post(
+  "/purchase",
+  isAuth.requireToken,
+  accounts.purchase
+  /*#swagger.summary = 'Purchases 1 product'*/
+  /*#swagger.desription = "Generates receipt and adds it to database" */
+  /*#swagger.operationId = "purchase"*/
+  /*#swagger.parameters = [{
   name:'body',
   in:'body',
   schema: {$ref: '#/definitions/ReceiptRequest'}
   }]*/
-/*#swagger.responses[200] = {
+  /*#swagger.responses[200] = {
   description: 'Returns Success',
   schema: {$ref: '#/definitions/ReceiptResponse'}
-
 }*/
+ /* #swagger.security = [{Bearer:[]}]*/
 );
 
-route.post("/login", accounts.login
-/* #swagger.summary = "Logs in user" */
-/* #swagger.desription = "Logs in user with information from request"*/
-/* #swagger.operationId = "login"*/
-/* #swagger.parameters = [{
+route.post(
+  "/login",
+  accounts.login
+  /* #swagger.summary = "Logs in user" */
+  /* #swagger.desription = "Logs in user with information from request"*/
+  /* #swagger.operationId = "login"*/
+  /* #swagger.parameters = [{
   name:'body',
   in:'body',
   schema: {$ref: '#/definitions/LoginCreds'}
 }]*/
-/* #swagger.responses[200] = {
+  /* #swagger.responses[200] = {
   description: 'Sends Token and userId',
   schema: {$ref: '#/definitions/LoginConfirm'}
 } */

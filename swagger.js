@@ -5,10 +5,10 @@ const doc = {
     title: "My API",
     description: "Description",
   },
-  // host: "igeekb.herokuapp.com",
-  // schemes: ["https"],
-  host: "localhost:8080",
-  schemes: ["http"],
+  host: "igeekb.herokuapp.com",
+  schemes: ["https"],
+  // host: "localhost:8080",
+  // schemes: ["http"],
   tags: [
     {
       name: "Accounts",
@@ -62,16 +62,19 @@ const doc = {
     },
     LoginCreds: {
       userName: "userName",
-      password: "123456"
+      password: "123456",
     },
     LoginConfirm: {
       token: "String",
       password: "String",
-    }
+    },
   },
   securityDefinitions: {
-    bearerAuth: {
-      type: "http",
+    Bearer: {
+      type: "apiKey",
+      in: "header", // can be 'header', 'query' or 'cookie'
+      name: "Authorization", // name of the header, query parameter or cookie
+      description: "Some description...",
       scheme: "bearer",
       bearerFormat: "JWT",
     },
@@ -79,7 +82,7 @@ const doc = {
 };
 
 const outputFile = "./swagger-output.json";
-const endpointsFiles = ["./app.js", "./routes/index.js"];
+const endpointsFiles = ["./routes/index.js"];
 
 /* NOTE: if you use the express Router, you must pass in the 
    'endpointsFiles' only the root file where the route starts,

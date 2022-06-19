@@ -1,6 +1,9 @@
 const route = require("express").Router();
 const products = require("../controllers/products");
-const { productValidation, editProductValidation } = require("../middleware/validators");
+const {
+  productValidation,
+  editProductValidation,
+} = require("../middleware/validators");
 const isAuth = require("../middleware/isAuth");
 const role = require("../middleware/checkRole");
 
@@ -49,6 +52,7 @@ route.post(
     schema: { $ref: '#/definitions/Product'}
   }
   */
+  /* #swagger.security = [{Bearer:[]}]*/
 );
 
 route.patch(
@@ -70,6 +74,7 @@ route.patch(
   schema: { $ref: '#/definitions/Product'}
 }
 */
+  /* #swagger.security = [{Bearer:[]}]*/
 );
 
 route.delete(
@@ -85,6 +90,7 @@ description: 'Returns deleted product',
 schema: { $ref: '#/definitions/Product'}
 }
 */
+  /* #swagger.security = [{Bearer:[]}]*/
 );
 
 module.exports = route;
