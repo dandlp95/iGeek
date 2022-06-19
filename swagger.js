@@ -29,7 +29,6 @@ const doc = {
       lastName: "Doe",
       address: "12 Test Street, ID, USA",
       email: "Joe_Doe@gmail.com",
-      interests: [],
     },
     Accounts: [{ $ref: "#/definitions/Account" }],
     Product: {
