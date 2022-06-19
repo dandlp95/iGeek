@@ -61,7 +61,7 @@ route.patch(
   /* #swagger.description = 'Edits the product with the specified id.' */
   /* #swagger.operationId = 'editProduct' */
   /* #swagger.parameters = [{
-  name: 'body', 
+  name:'body', 
   in:'body',
   schema: { $ref: '#/definitions/Product' }
 }] */
