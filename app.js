@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
         secret: "keyboard cat",
         resave: false,
         saveUninitialized: false, // It means dont create a session until something is stored.
-        // cookie: { secure: true }, <- wont works until we use https
+        cookie: { secure: true }
       })
     )
     .use(passport.initialize())
