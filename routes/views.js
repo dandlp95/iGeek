@@ -4,7 +4,7 @@ routes.get("/", (req, res) => {
   res.render("login");
 });
 
-routes.get("/dashboard", (req, res) => {
-  res.render("dashboard");
+routes.get("/success", (req, res) => {
+  res.render("success");
 });
 module.exports = routes;

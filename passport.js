@@ -24,7 +24,7 @@ module.exports = function (passport) {
         try {
           let account = await AccountModel.findOne({ googleId: profile.id });
           if (account) {
-            done(null, account);
+            done(null, account); // first parameter is the err. Null means no err. 
           } else {
             const account = await AccountModel.create(newAccount);
             done(null, account);

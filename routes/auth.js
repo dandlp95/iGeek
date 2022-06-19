@@ -13,7 +13,7 @@ route.get(
 // Get /auth/google/callback
 route.get(
   "/google/callback",
-  passport.authenticate("google", { failureMessage: "failed to log in." }),
+  passport.authenticate("google", { failureMessage: "Failed to authenticate" }),
   (req, res) => {
     const token = jwt.sign(
       {
@@ -23,9 +23,8 @@ route.get(
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1h" }
     );
-
-    console.log(req.user);
-    res.send(token);
+    res.cookie("token", token);
+    res.redirect("/views/success");
   }
 );
 

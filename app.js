@@ -9,12 +9,14 @@ const { logError, returnError } = require("./errorHandling/errorHandler");
 const exphbs = require("express-handlebars");
 const passport = require("passport");
 const session = require("express-session");
+const flash = require("express-flash");
 
 mongoose.connect(process.env.MONGO_URL).then(() => {
   // Passport config
   require("./passport")(passport);
 
   app
+    .use(flash())
     .use(
       session({
         secret: "keyboard cat",

@@ -5,7 +5,6 @@ const { ensureAuth } = "./OAuth";
 const requireToken = (req, res, next) => {
   if (!req.get("Authorization")) {
     throw new api401Error("Not authenticated.");
-    // ensureAuth(req, res, next); // Not sure about this one being here.
   }
   const token = req.get("Authorization").split(" ")[1];
   let decodedToken;
