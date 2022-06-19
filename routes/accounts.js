@@ -89,8 +89,8 @@ route.post("/purchase", isAuth.requireToken, accounts.purchase
 /*#swagger.desription = "Generates receipt and adds it to database" */
 /*#swagger.operationId = "purchase"*/
 /*#swagger.parameters = [{
-  name:body,
-  in:body,
+  name:'body',
+  in:'body',
   schema: {$ref: '#/definitions/ReceiptRequest'}
   }]*/
 /*#swagger.responses[200] = {
@@ -110,7 +110,7 @@ route.post("/login", accounts.login
   schema: {$ref: '#/definitions/LoginCreds'}
 }]*/
 /* #swagger.responses[200] = {
-  description: Sends Token and userId,
+  description: 'Sends Token and userId',
   schema: {$ref: '#/definitions/LoginConfirm'}
 } */
 );

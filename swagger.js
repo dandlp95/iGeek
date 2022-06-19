@@ -65,8 +65,8 @@ const doc = {
       password: "123456"
     },
     LoginConfirm: {
-      token: String,
-      password: String,
+      token: "String",
+      password: "String",
     }
   },
   securityDefinitions: {

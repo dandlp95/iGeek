@@ -20,6 +20,13 @@
   "schemes": [
     "http"
   ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    }
+  },
   "paths": {
     "(/products/": {
       "get": {
@@ -116,7 +123,7 @@
       }
     },
     "(/products/edit_product/{id}": {
-      "put": {
+      "patch": {
         "tags": [
           "Products"
         ],
@@ -150,6 +157,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       }
@@ -360,6 +370,69 @@
         }
       }
     },
+    "(/accounts/purchase": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Purchases 1 product",
+        "description": "",
+        "operationId": "purchase",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ReceiptRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns Success",
+            "schema": {
+              "$ref": "#/definitions/ReceiptResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "(/accounts/login": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Logs in user",
+        "description": "",
+        "operationId": "login",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LoginCreds"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sends Token and userId",
+            "schema": {
+              "$ref": "#/definitions/LoginConfirm"
+            }
+          }
+        }
+      }
+    },
     "/products/": {
       "get": {
         "tags": [
@@ -446,7 +519,7 @@
       }
     },
     "/products/edit_product/{id}": {
-      "put": {
+      "patch": {
         "tags": [
           "Products"
         ],
@@ -477,6 +550,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       }
@@ -668,6 +744,63 @@
           }
         }
       }
+    },
+    "/accounts/purchase": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Purchases 1 product",
+        "description": "",
+        "operationId": "purchase",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ReceiptRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns Success",
+            "schema": {
+              "$ref": "#/definitions/ReceiptResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/accounts/login": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Logs in user",
+        "description": "",
+        "operationId": "login",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LoginCreds"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sends Token and userId",
+            "schema": {
+              "$ref": "#/definitions/LoginConfirm"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -736,6 +869,94 @@
       "type": "array",
       "items": {
         "$ref": "#/definitions/Product"
+      }
+    },
+    "ReceiptResponse": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "type": "string",
+          "example": "62a54ac57d0c23aca502a25c"
+        },
+        "purchase": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": {
+                "type": "string",
+                "example": "62895a86d7c8591701dd2be4"
+              },
+              "productName": {
+                "type": "string",
+                "example": "Justice League #45"
+              },
+              "cost": {
+                "type": "number",
+                "example": 4
+              },
+              "quantity": {
+                "type": "number",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "ReceiptRequest": {
+      "type": "object",
+      "properties": {
+        "purchase": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": {
+                "type": "string",
+                "example": "62895a86d7c8591701dd2be4"
+              },
+              "productName": {
+                "type": "string",
+                "example": "Justice League #45"
+              },
+              "cost": {
+                "type": "number",
+                "example": 4
+              },
+              "quantity": {
+                "type": "number",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "LoginCreds": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string",
+          "example": "userName"
+        },
+        "password": {
+          "type": "string",
+          "example": "123456"
+        }
+      }
+    },
+    "LoginConfirm": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "String"
+        },
+        "password": {
+          "type": "string",
+          "example": "String"
+        }
       }
     }
   }
