@@ -1,6 +1,6 @@
 const route = require("express").Router();
 const products = require("../controllers/products");
-const { productValidation } = require("../middleware/validators");
+const { productValidation, editProductValidation } = require("../middleware/validators");
 const isAuth = require("../middleware/isAuth");
 const role = require("../middleware/checkRole");
 
@@ -54,7 +54,7 @@ route.post(
 route.patch(
   "/edit_product/:id",
   isAuth.requireToken,
-  productValidation,
+  editProductValidation,
   role.checkRole,
   products.editProduct
   /* #swagger.summary = 'Edits 1 product.' */

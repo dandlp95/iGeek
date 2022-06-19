@@ -180,3 +180,39 @@ exports.editAccountValidation = [
 
   body("purchases").not().exists().withMessage("Field not needed."),
 ];
+
+exports.editProductValidation = [
+  body("productName")
+    .optional({ nullable: true })
+    .isString()
+    .withMessage("Not a string")
+
+    .isLength({ max: 40 })
+    .withMessage("Maximum number of characters exceeded")
+
+    .custom((value) => {
+      return ProductModel.find({ productName: value }).then((products) => {
+        if (products.length > 0) {
+          return Promise.reject("Product is already in the database");
+        }
+      });
+    }),
+
+  body("productDescription")
+    .optional({ nullable: true })
+    .isString()
+    .withMessage("Not a string")
+
+    .isLength({ max: 500 })
+    .withMessage("Maximum number of characters exceeded"),
+
+  body("stock")
+    .optional({ nullable: true })
+    .isNumeric() // String or integer are valid. Schema will transform it into an integer.
+    .withMessage("Not a number"),
+
+  body("cost")
+    .optional({ nullable: true })
+    .isFloat()
+    .withMessage("Not a float."),
+];
