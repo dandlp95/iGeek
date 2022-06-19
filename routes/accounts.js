@@ -52,7 +52,6 @@ route.post(
     schema: { $ref: '#/definitions/Account'}
   }
   */
-  /* #swagger.security = [{Bearer:[]}]*/
 );
 
 route.put(
