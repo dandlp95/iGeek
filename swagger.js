@@ -49,16 +49,14 @@ const doc = {
         },
       ],
     },
-    ReceiptRequest: {
-      purchase: [
-        {
-          productId: "62895a86d7c8591701dd2be4",
-          productName: "Justice League #45",
-          cost: 4,
-          quantity: 1,
-        },
-      ],
-    },
+    ReceiptRequest: [
+      {
+        productId: "62895a86d7c8591701dd2be4",
+        productName: "Justice League #45",
+        cost: 4,
+        quantity: 1,
+      },
+    ],
     LoginCreds: {
       userName: "userName",
       password: "123456",
