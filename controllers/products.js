@@ -1,6 +1,7 @@
 const ProductModel = require("../db/productModel");
 const { validationResult } = require("express-validator");
 const Api404Error = require("../errorHandling/api404Error");
+const Api401Error = require("../errorHandling/api401Error");
 
 const getAllProducts = async (req, res) => {
   try {
@@ -29,47 +30,62 @@ const getById = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const product = new ProductModel(req.body);
-  const errors = validationResult(req);
+  if (req.accountRole) {
+    const product = new ProductModel(req.body);
+    const errors = validationResult(req);
 
-  try {
-    if (!errors.isEmpty()) {
-      res.status(422).send(errors.array());
-    } else {
-      try {
-        await product.save();
-        res.status(200).send(product);
-      } catch (err) {
-        res.status(500).send(err);
+    try {
+      if (!errors.isEmpty()) {
+        res.status(422).send(errors.array());
+      } else {
+        try {
+          await product.save();
+          res.status(200).send(product);
+        } catch (err) {
+          res.status(500).send(err);
+        }
       }
+    } catch (err) {
+      res.status(500).send(err);
     }
-  } catch (err) {
-    res.status(500).send(err);
+  } else {
+    const err = new Api401Error("Not authorized.");
+    next(err);
   }
 };
 
 const editProduct = (req, res) => {
-  ProductModel.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).send(docs);
-    }
-  });
-};
-
-const deleteProduct = (req, res) => {
-  ProductModel.findByIdAndDelete(req.params.id, (err, docs) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      if (docs === null) {
-        res.status(200).send("Alread deleted.");
+  if (req.accountRole) {
+    ProductModel.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
+      if (err) {
+        res.status(400).send(err);
       } else {
         res.status(200).send(docs);
       }
-    }
-  });
+    });
+  } else {
+    const err = new Api401Error("Not authorized.");
+    next(err);
+  }
+};
+
+const deleteProduct = (req, res) => {
+  if (req.accountRole) {
+    ProductModel.findByIdAndDelete(req.params.id, (err, docs) => {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        if (docs === null) {
+          res.status(200).send("Alread deleted.");
+        } else {
+          res.status(200).send(docs);
+        }
+      }
+    });
+  } else {
+    const err = new Api401Error("Not authorized.");
+    next(err);
+  }
 };
 
 module.exports = {

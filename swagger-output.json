@@ -5,7 +5,7 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "igeekb.herokuapp.com",
+  "host": "localhost:8080",
   "basePath": "/",
   "tags": [
     {
@@ -18,9 +18,348 @@
     }
   ],
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
+    "(/products/": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Returns all Products",
+        "description": "Returns all products added to database.",
+        "operationId": "getAllProducts.",
+        "produces": [
+          null
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns all products.",
+            "schema": {
+              "$ref": "#/definitions/Products"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "(/products/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Returns 1 product by Id.",
+        "description": "Returns the product with the Id that matches the request   Id.",
+        "operationId": "getProduct",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Product Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns product with specified request id",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "(/products/add_product": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Adds 1 product.",
+        "description": "Adds the product in the request.",
+        "operationId": "addProduct",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns posted product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "(/products/edit_product/{id}": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Edits 1 product.",
+        "description": "Edits the product with the specified id.",
+        "operationId": "editProduct",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns edited product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "(/products/delete_product/{id}": {
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Deletes 1 product.",
+        "description": "Deletes the product with the specified id.",
+        "operationId": "deleteProduct",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns deleted product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "(/accounts/": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Returns all accounts",
+        "description": "Returns all accounts added to database.",
+        "operationId": "getAllAccounts.",
+        "produces": [
+          null
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Returns all accounts.",
+            "schema": {
+              "$ref": "#/definitions/Accounts"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "(/accounts/{id}": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Returns 1 account by Id.",
+        "description": "Returns the account with the Id that matches the request   Id.",
+        "operationId": "getAccount",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Product Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns account with specified request id",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "(/accounts/add_account": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Adds 1 account.",
+        "description": "Adds the account in the request.",
+        "operationId": "addAccount",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns posted account",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "(/accounts/edit_account/{id}": {
+      "patch": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Edits account.",
+        "description": "Replaces account information with information from the request.",
+        "operationId": "editAccount",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns edit account",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "(/accounts/delete_account/{id}": {
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Deletes account.",
+        "description": "Deletes account with specified Id.",
+        "operationId": "deleteAccount",
+        "produces": [
+          null
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns deleted account",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/products/": {
       "get": {
         "tags": [
@@ -189,6 +528,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -260,7 +602,7 @@
       }
     },
     "/accounts/edit_account/{id}": {
-      "put": {
+      "patch": {
         "tags": [
           "Accounts"
         ],
@@ -320,54 +662,9 @@
           },
           "400": {
             "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/accounts/login": {
-      "post": {
-        "tags": [
-          "Accounts"
-        ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userName": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

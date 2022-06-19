@@ -12,10 +12,10 @@ route.use(
   // #swagger.tags = ['Accounts']
 );
 
-route.use("/auth", require("./auth"));
+route.use("/auth", require("./auth") /*#swagger.ignore = true*/);
 
-route.use("/views", require("./views"));
+route.use("/views", require("./views") /*#swagger.ignore = true*/);
 
-route.use("/", require("./documentation"));
+route.use("/", require("./documentation") /*#swagger.ignore = true*/);
 
 module.exports = route;

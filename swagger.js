@@ -5,8 +5,10 @@ const doc = {
     title: "My API",
     description: "Description",
   },
-  host: "igeekb.herokuapp.com",
-  schemes: ["https"],
+  // host: "igeekb.herokuapp.com",
+  // schemes: ["https"],
+  host: "localhost:8080",
+  schemes: ["http"],
   tags: [
     {
       name: "Accounts",
@@ -27,7 +29,7 @@ const doc = {
       lastName: "Doe",
       address: "12 Test Street, ID, USA",
       email: "Joe_Doe@gmail.com",
-      interests: []
+      interests: [],
     },
     Accounts: [{ $ref: "#/definitions/Account" }],
     Product: {
@@ -37,6 +39,42 @@ const doc = {
       cost: 100,
     },
     Products: [{ $ref: "#/definitions/Product" }],
+    ReceiptResponse: {
+      accountId: "62a54ac57d0c23aca502a25c",
+      purchase: [
+        {
+          productId: "62895a86d7c8591701dd2be4",
+          productName: "Justice League #45",
+          cost: 4,
+          quantity: 1,
+        },
+      ],
+    },
+    ReceiptRequest: {
+      purchase: [
+        {
+          productId: "62895a86d7c8591701dd2be4",
+          productName: "Justice League #45",
+          cost: 4,
+          quantity: 1,
+        },
+      ],
+    },
+    LoginCreds: {
+      userName: "userName",
+      password: "123456"
+    },
+    LoginConfirm: {
+      token: String,
+      password: String,
+    }
+  },
+  securityDefinitions: {
+    bearerAuth: {
+      type: "http",
+      scheme: "bearer",
+      bearerFormat: "JWT",
+    },
   },
 };
 

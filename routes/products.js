@@ -1,6 +1,8 @@
 const route = require("express").Router();
 const products = require("../controllers/products");
 const { productValidation } = require("../middleware/validators");
+const isAuth = require("../middleware/isAuth");
+const role = require("../middleware/checkRole");
 
 route.get(
   "/",
@@ -30,6 +32,8 @@ route.get(
 
 route.post(
   "/add_product",
+  isAuth.requireToken,
+  role.checkRole,
   productValidation,
   products.addProduct
   /* #swagger.summary = 'Adds 1 product.' */
@@ -49,7 +53,9 @@ route.post(
 
 route.put(
   "/edit_product/:id",
+  isAuth.requireToken,
   productValidation,
+  role.checkRole,
   products.editProduct
   /* #swagger.summary = 'Edits 1 product.' */
   /* #swagger.description = 'Edits the product with the specified id.' */
@@ -68,6 +74,8 @@ route.put(
 
 route.delete(
   "/delete_product/:id",
+  isAuth.requireToken,
+  role.checkRole,
   products.deleteProduct
   /* #swagger.summary = 'Deletes 1 product.' */
   /* #swagger.description = 'Deletes the product with the specified id.' */

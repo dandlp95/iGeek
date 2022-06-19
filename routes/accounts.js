@@ -28,6 +28,7 @@ route.get(
     description: 'Returns account with specified request id',
     schema: { $ref: '#/definitions/Account'}
   } */
+
 );
 
 route.post(
@@ -83,8 +84,35 @@ schema: { $ref: '#/definitions/Account'}
 */
 );
 
-route.post("/purchase", isAuth.requireToken, accounts.purchase);
+route.post("/purchase", isAuth.requireToken, accounts.purchase
+/*#swagger.summary = 'Purchases 1 product'*/
+/*#swagger.desription = "Generates receipt and adds it to database" */
+/*#swagger.operationId = "purchase"*/
+/*#swagger.parameters = [{
+  name:body,
+  in:body,
+  schema: {$ref: '#/definitions/ReceiptRequest'}
+  }]*/
+/*#swagger.responses[200] = {
+  description: 'Returns Success',
+  schema: {$ref: '#/definitions/ReceiptResponse'}
 
-route.post("/login", accounts.login);
+}*/
+);
+
+route.post("/login", accounts.login
+/* #swagger.summary = "Logs in user" */
+/* #swagger.desription = "Logs in user with information from request"*/
+/* #swagger.operationId = "login"*/
+/* #swagger.parameters = [{
+  name:'body',
+  in:'body',
+  schema: {$ref: '#/definitions/LoginCreds'}
+}]*/
+/* #swagger.responses[200] = {
+  description: Sends Token and userId,
+  schema: {$ref: '#/definitions/LoginConfirm'}
+} */
+);
 
 module.exports = route;
