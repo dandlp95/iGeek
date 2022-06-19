@@ -17,6 +17,7 @@ route.get(
       description: 'Returns all accounts.',
       schema: {$ref: '#/definitions/Accounts'}
   } */
+  /* #swagger.security = [{Bearer:[]}]*/
 );
 route.get(
   "/:id",
@@ -54,7 +55,7 @@ route.post(
   /* #swagger.security = [{Bearer:[]}]*/
 );
 
-route.patch(
+route.put(
   "/edit_account/:id",
   editAccountValidation, // <- Need to fix validation for editing account
   isAuth.requireToken,

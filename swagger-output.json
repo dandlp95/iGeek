@@ -5,7 +5,7 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "igeekb.herokuapp.com",
   "basePath": "/",
   "tags": [
     {
@@ -18,7 +18,7 @@
     }
   ],
   "schemes": [
-    "http"
+    "https"
   ],
   "securityDefinitions": {
     "Bearer": {
@@ -122,7 +122,7 @@
       }
     },
     "/products/edit_product/{id}": {
-      "patch": {
+      "put": {
         "tags": [
           "Products"
         ],
@@ -221,7 +221,12 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     },
     "/accounts/{id}": {
@@ -301,7 +306,7 @@
       }
     },
     "/accounts/edit_account/{id}": {
-      "patch": {
+      "put": {
         "tags": [
           "Accounts"
         ],

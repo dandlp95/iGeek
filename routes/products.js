@@ -55,7 +55,7 @@ route.post(
   /* #swagger.security = [{Bearer:[]}]*/
 );
 
-route.patch(
+route.put(
   "/edit_product/:id",
   isAuth.requireToken,
   editProductValidation,
