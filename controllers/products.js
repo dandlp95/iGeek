@@ -55,8 +55,21 @@ const addProduct = async (req, res) => {
 };
 
 const editProduct = (req, res) => {
+  const productEdits = {
+    productName: req.body.productName,
+    productDescription: req.body.productDescription,
+    stock: req.body.stock,
+    cost: req.body.cost,
+  };
+
+  for (field in productEdits) {
+    if (field === null) {
+      delete field;
+    }
+  }
+
   if (req.accountRole) {
-    ProductModel.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
+    ProductModel.findByIdAndUpdate(req.params.id, productEdits, (err, docs) => {
       if (err) {
         res.status(400).send(err);
       } else {

@@ -92,8 +92,6 @@ const editAccount = async (req, res, next) => {
       address: req.body.address,
     };
 
-    console.log(accountEdits);
-
     for (field in accountEdits) {
       if (field === null) {
         delete field;

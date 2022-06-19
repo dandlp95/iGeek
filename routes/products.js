@@ -51,7 +51,7 @@ route.post(
   */
 );
 
-route.put(
+route.patch(
   "/edit_product/:id",
   isAuth.requireToken,
   productValidation,
